@@ -1,0 +1,47 @@
+
+@import "../index.scss";
+.search
+{
+    width:60%;
+    // background-color: blue;
+    @include centerElements;
+    align-items: flex-start;
+    flex-direction: column;
+
+    form
+    {
+        width:100%;
+        @include centerElements;
+        // background-color: red;
+        margin-top: 50px;
+        gap:5px;
+        font-size: 22px;
+    }
+
+    input
+    {
+        padding-left:10px;
+        width:50%;
+        font-size: 26px;
+        height: 60px;
+        border-radius: 5px;
+    }
+
+    .close
+    {
+        &:hover{
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+        &:active{
+            color:grey;
+        }
+    }
+
+    .ingredients
+    {
+        display: flex;
+        width:100%;
+        flex-wrap: wrap;
+    }
+}

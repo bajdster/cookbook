@@ -1,0 +1,9 @@
+@import '../index.scss';
+
+.mainNav
+{
+    width:100%;
+    // background-color: aqua;
+    height: 70px;
+    @include centerElements;
+}
