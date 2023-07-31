@@ -5,6 +5,31 @@
   justify-content: center;
 }
 
+@mixin button
+{
+  background-color: $main-color;
+  color: #FFFFFF;
+  padding: 3px 12px 3px 12px;
+  border-radius: 6px;
+  border: none;
+  font-size: 24px;
+  margin-top: 3px;
+  box-shadow: 1px 1px 5px black;
+
+  &:hover
+  {
+      background-color: rgb(200, 29, 49);
+      cursor: pointer;
+  }
+
+  &:active
+  {
+      background-color: rgb(70, 8, 15);
+  }
+}
+
+$main-color: rgb(158, 33, 48);
+
 *
 {
   margin: 0;
