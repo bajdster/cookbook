@@ -28,7 +28,18 @@
   }
 }
 
+@mixin tag($color) {
+  font-size: 12px;
+  padding: 2px 4px;
+  background-color: $color;
+  color: white;
+  @include centerElements;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
 $main-color: rgb(158, 33, 48);
+
 
 *
 {

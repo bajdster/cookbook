@@ -2,15 +2,29 @@
 
 .ingredientItem
 {
-    width:120px;
-    height: 120px;
+    width:200px;
+    min-height: 100px;
     @include centerElements;
+    justify-content: space-between;
     flex-direction: column;
+    text-align: center;
+    font-size: 16px;
+    // border:1px solid black;
+    padding: 10px;
+    // position: relative;
+   
 
     img
     {
-        width:50%;
-        height: 50%;
+        width:120px;
+        height: 100px;
+        transition: transform 1s ease;
+
+        // &:hover
+        // {
+        //     // position: absolute;
+        //     transform:scale(3);
+        // }
     }
 
     button 

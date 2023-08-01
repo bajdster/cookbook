@@ -6,6 +6,7 @@ const IngredientItem = ({name, image, id, addIngredient}) => {
     <div className={classes.ingredientItem}>
         
         <img src={'https://spoonacular.com/cdn/ingredients_100x100/'+image}></img>
+        
         <p>{name}</p>
         <button onClick = {()=>
         {

@@ -3,7 +3,66 @@
 .mainNav
 {
     width:100%;
-    // background-color: aqua;
-    height: 70px;
+    height:100px;
     @include centerElements;
+    position: relative;
+    
+
+    .logoImage
+    {
+        height: 200px;
+        width: 200px;
+
+        img
+        {
+            width:100%;
+            height: 100%;
+        }
+    }
+
+    .randomRecipe
+    {
+        position: absolute;
+        right: 15px;
+        top:25%;
+
+        button
+        {
+            background: transparent;
+            border: none;
+            color: $main-color;
+            font-weight: bold;
+            font-size: 22px;
+            padding: 10px;
+
+            &:hover
+            {
+                background-color: $main-color;
+                color:white;
+                padding: 10px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            &:active
+            {
+                background-color: rgb(231, 16, 16);
+            }
+        }
+    }
+}
+
+@media only screen and (max-width:600px)  
+{
+    .mainNav
+    {
+        .randomRecipe
+        {
+            button
+            {
+                font-size: 14px;
+            }
+        }
+    }
+
+    
 }

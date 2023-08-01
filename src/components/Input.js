@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {FaWindowClose} from "react-icons/fa"
 import classes from "./Input.module.scss"
 import IngredientItem from './IngredientItem'
+import RecipeItem from './RecipeItem'
 
 const Input = () => {
 
@@ -9,6 +10,7 @@ const Input = () => {
     const [allIngredients, setAllIngredients] = useState({results:[{name:"milk", id: 1, img: "milk.png"}, {name:"eggs", id: 2, img: "milk.png"}]});
     const [usedIngredients, setUsedIngredients] = useState([])
     const [recipeSearchingMode, setRecipeSearchingMode] = useState(false)
+    const [allRecipes, setAllRecipes] = useState([{title:"milk", id: 1, img: "milk.png"}, {title:"eggs", id: 2, img: "milk.png"}])
 
     const getIngredient = (e) =>
     {   
@@ -28,6 +30,32 @@ const Input = () => {
         })
     }
 
+
+    useEffect(()=>
+    {
+        setRecipeSearchingMode(false);
+        
+        const searchIngredients = async () =>
+        {
+            const response = await fetch(`https://api.spoonacular.com/food/ingredients/search?query=${ingredient}&number=12&apiKey=3a9aab141bca4fdaa4ed1028bfbe27b1`)
+            const data = await response.json();
+            setAllIngredients(data);
+        }
+
+       
+        const typingTimer = setTimeout(()=>
+        {
+            searchIngredients()
+            console.log("fetch recipes")
+        }, 1500)
+
+        return ()=>
+        {
+            clearInterval(typingTimer)
+        }
+        
+    }, [ingredient])
+
     const searchRecipes = (e) =>
     {
         e.preventDefault();
@@ -38,42 +66,17 @@ const Input = () => {
                 if(index === 0) ingredients+=el;
                 else ingredients+=`+${el}`
             })
-        // const searchRecipes = async () =>
-        // {
-        //     const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=12&apiKey=3a9aab141bca4fdaa4ed1028bfbe27b1`)
-        //     const data = await response.json();
-
-        //     console.log(data)
-        // }
-
-
-        // searchRecipes()
-    }
-
-    useEffect(()=>
-    {
-        setRecipeSearchingMode(false);
-        
-        // const searchIngredients = async () =>
-        // {
-        //     const response = await fetch(`https://api.spoonacular.com/food/ingredients/search?query=${ingredient}&number=12&apiKey=3a9aab141bca4fdaa4ed1028bfbe27b1`)
-        //     const data = await response.json();
-        //     setAllIngredients(data);
-        // }
-
-       
-        const typingTimer = setTimeout(()=>
+        const searchRecipes = async () =>
         {
-            // searchIngredients()
-            console.log("fetch recipes")
-        }, 1500)
+            const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=12&apiKey=3a9aab141bca4fdaa4ed1028bfbe27b1`)
+            const data = await response.json();
 
-        return ()=>
-        {
-            clearInterval(typingTimer)
+            setAllRecipes(data)
         }
-        
-    }, [ingredient])
+
+
+        searchRecipes()
+    }
 
 console.log(allIngredients.results)
 
@@ -98,6 +101,11 @@ console.log(allIngredients.results)
         {allIngredients.results && !recipeSearchingMode && allIngredients.results.map(item=>
         {
             return <IngredientItem name={item.name} image={item.image} id={item.id} key={item.id} addIngredient={addUsedIngredients}/>
+        })}
+
+        {allRecipes && recipeSearchingMode && allRecipes.map(item =>
+        {
+            return <RecipeItem key = {item.id} id={item.id} title={item.title} image={item.image}/>
         })}
     </div>
 </div>
