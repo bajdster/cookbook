@@ -3,9 +3,12 @@ import Root from "./components/Root";
 import Home from "./pages/Home";
 import Recipe from "./pages/Recipe"
 import {loader as recipeLoader} from "./pages/Recipe"
+import Error from "./pages/Error";
 
 const router = createBrowserRouter([
-  {path: '/', element: <Root/>, children:
+  {path: '/', element: <Root/>,
+  errorElement:<Error/>,
+  children:
   [
     {path: '/', element: <Home/>},
     {path: ':recipe', element: <Recipe/>, loader: recipeLoader}

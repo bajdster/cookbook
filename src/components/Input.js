@@ -15,6 +15,7 @@ const Input = () => {
     const [allRecipes, setAllRecipes] = useState([{title:"milk", id: 1, img: "milk.png"}, {title:"eggs", id: 2, img: "milk.png"}])
     const [noFound, setNoFound] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
 
 
     const getIngredient = (e) =>
@@ -44,20 +45,30 @@ const Input = () => {
 
         const searchIngredients = async () =>
         {
-            
-            const response = await fetch(`https://api.spoonacular.com/food/ingredients/search?query=${ingredient}&number=12&apiKey=3a9aab141bca4fdaa4ed1028bfbe27b1`)
-            const data = await response.json();
+            try
+            {
+                
+                const response = await fetch(`https://api.spoonacular.com/food/ingredients/search?query=${ingredient}&number=12&apiKey=3a9aab141bca4fdaa4ed1028bfbe27b1`)
+                const data = await response.json();
 
-            if(allIngredients !== "" && data.results.length === 0)
+                if(allIngredients !== "" && data.results.length === 0)
+                {
+                    setNoFound(true);
+                    console.log(data.length)
+                }
+                else
+                {
+                    setNoFound(false)
+                    setAllIngredients(data);
+                }
+            }  
+            catch(err)
             {
-                setNoFound(true);
-                console.log(data.length)
+                setError("Przekroczono limit zapytań")
+                console.error(err)
             }
-            else
-            {
-                setNoFound(false)
-                setAllIngredients(data);
-            }
+          
+          
             setLoading(false)
         }
 
@@ -75,6 +86,22 @@ const Input = () => {
         
     }, [ingredient])
 
+    useEffect(()=>
+    {
+        if(error==="") return
+        else {
+            const timer = setTimeout(()=>
+            {
+                setError("")
+            }, 2500)
+
+            return ()=>
+            {
+                clearTimeout(timer)
+            }
+        }
+    }, [error])
+
     const searchRecipes = (e) =>
     {
         e.preventDefault();
@@ -87,10 +114,18 @@ const Input = () => {
             })
         const searchFood = async () =>
         {
-            const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=12&apiKey=3a9aab141bca4fdaa4ed1028bfbe27b1`)
-            const data = await response.json();
-
-            setAllRecipes(data)
+            try
+            {
+                const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=12&apiKey=3a9aab141bca4fdaa4ed1028bfbe27b1`)
+                const data = await response.json();
+                setAllRecipes(data)
+            }
+            catch(err)
+            {
+                setError("Przekroczono liczbę zapytań")
+                console.error(err)
+            }
+           
         }
 
 
@@ -116,6 +151,8 @@ console.log(allIngredients.results)
             })}
         </ul>
 
+        {error && <p className={classes.noFound}>Przekroczono dzienny limit zapytań</p>}
+
         {loading 
         ? <div className={classes.loading}><img src={loadingAnimation} alt = 'loading'></img></div> 
         : <div className={classes.ingredients}>
@@ -136,4 +173,4 @@ console.log(allIngredients.results)
 
 export default Input
 
-//zmien na ref bo za duzo zapytan i limit sie przekracza...
+//add try catch to fetches
