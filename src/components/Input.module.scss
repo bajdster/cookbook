@@ -69,4 +69,62 @@
             border-radius: 5px;
         }
     }
+
+    .loading
+    {
+        width: 80%;
+        // background-color: red;
+        @include centerElements;
+
+        img
+        {
+            width:50%;
+            
+        }
+    }
+
+    .noFound
+    {
+        // background-color: red;
+        color:$main-color;
+        font-size: 24px;
+        font-weight: bold;
+        width:70%;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width:600px)  
+{
+
+    .search
+    {
+        width:100%;
+
+        input
+        {
+            width:70%;
+        }
+
+        .ingredients
+        {
+            @include centerElements;
+        }
+
+        form
+        {
+            display: flex;
+            flex-direction: column;
+
+            input
+            {
+                margin-top:10px;
+                margin-bottom:10px;
+            }
+        }
+    }
+
+    .loading{
+        @include centerElements;
+    }
 }

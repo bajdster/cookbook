@@ -12,6 +12,17 @@
     // border:1px solid black;
     padding: 10px;
     // position: relative;
+    
+    p
+    {
+     color: $main-color;
+     font-weight: bold;
+
+     &:hover
+     {
+         color:red
+     }
+    }
    
 
     img
@@ -31,4 +42,9 @@
     {
      @include button;
     }
+}
+
+a
+{
+    text-decoration: none;
 }

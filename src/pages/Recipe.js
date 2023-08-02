@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams, useLoaderData } from 'react-router-dom';
+import { useParams, useLoaderData, Link } from 'react-router-dom';
 import classes from "./Recipe.module.scss"
 
 const Recipe = () => {
@@ -52,7 +52,15 @@ const Recipe = () => {
           <p dangerouslySetInnerHTML={{ __html: data.summary }} />
         </div>
       </div>
+
+      <Link to="/">
+      <button className={classes.backButton}>
+        Back Home
+      </button>
+      </Link>
     </div>
+
+    
   )
 }
 

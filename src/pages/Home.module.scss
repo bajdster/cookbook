@@ -4,7 +4,7 @@
 .home
 {
     width:100%;
-    height:100%;
+    // height:100%;
     // background-color: red;
     display: flex;
 
@@ -38,4 +38,30 @@
     }
 
    
+}
+
+@media only screen and (max-width:600px)  
+{
+
+    .home
+    {
+        flex-direction: column;
+        @include centerElements;
+
+
+        .hamburgerIcon
+        {
+            width:100%;
+
+            h2
+            {
+                font-size: 36px;
+            }
+            h3
+            {
+                font-size: 16px;
+            }
+        }
+       
+    }
 }
