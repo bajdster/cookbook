@@ -5,6 +5,7 @@ import IngredientItem from './IngredientItem'
 import RecipeItem from './RecipeItem'
 import { useNavigation } from 'react-router-dom'
 import loadingAnimation from "../assets/loading2.gif"
+import {MdOutlineCancel} from "react-icons/md"
 
 const Input = () => {
 
@@ -40,14 +41,15 @@ const Input = () => {
     useEffect(()=>
     {
         setRecipeSearchingMode(false);
-        setLoading(true)
         setNoFound(false)
 
         const searchIngredients = async () =>
         {
+           
+            setLoading(true)
+      
             try
             {
-                
                 const response = await fetch(`https://api.spoonacular.com/food/ingredients/search?query=${ingredient}&number=12&apiKey=3a9aab141bca4fdaa4ed1028bfbe27b1`)
                 const data = await response.json();
 
@@ -68,15 +70,20 @@ const Input = () => {
                 console.error(err)
             }
           
-          
             setLoading(false)
         }
 
-       
         const typingTimer = setTimeout(()=>
         {
-            searchIngredients()
-            console.log("fetch recipes")
+            if(ingredient === "")
+            {
+                setAllIngredients("")
+            }
+            if(ingredient!=="")
+            {
+                searchIngredients()
+            }
+            
         }, 1500)
 
         return ()=>
@@ -128,8 +135,16 @@ const Input = () => {
            
         }
 
-
         searchFood()
+    }
+
+    const deleteIngredient = (item) =>
+    {
+        const updatedIngredients = usedIngredients.filter(element=>
+            {
+                return element !== item;
+            })
+            setUsedIngredients(updatedIngredients)
     }
 
 console.log(allIngredients.results)
@@ -147,7 +162,9 @@ console.log(allIngredients.results)
         <ul className={classes.usedIngredients}>
             {usedIngredients.map((item, index)=>
             {
-                return <li key={index}>{item}</li>
+                return <li key={index} onClick={()=>{deleteIngredient(item)}}>  {item}
+                <MdOutlineCancel/>
+                </li>
             })}
         </ul>
 
